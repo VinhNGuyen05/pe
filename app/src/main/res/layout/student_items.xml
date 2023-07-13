@@ -34,12 +34,18 @@
             android:layout_height="wrap_content"
             android:text="19-2-2000" />
 
+        <TextView
+            android:id="@+id/gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="nam" />
+
 
         <TextView
             android:id="@+id/average_score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="8 diem" />
+            android:text="100000" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

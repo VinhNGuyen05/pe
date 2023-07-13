@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.CollationElementIterator;
 import java.util.List;
 
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHolder> {
@@ -24,7 +25,6 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
     @Override
     public StudentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(context).inflate(R.layout.student_items, parent, false);
-
         return new ViewHolder(itemView);
     }
 
@@ -35,6 +35,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
         holder.id.setText(String.valueOf(studentModel.getId()));
         holder.fullName.setText(studentModel.getFullName());
         holder.dob.setText(studentModel.getDob());
+        holder.gender.setText(studentModel.getGender());
         holder.averageScore.setText(String.valueOf(studentModel.getAverageScore()));
     }
 
@@ -44,7 +45,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView id, fullName, dob, averageScore;
+        private TextView id, fullName, dob, gender, averageScore;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -52,6 +53,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
             id = itemView.findViewById(R.id.student_id);
             fullName = itemView.findViewById(R.id.full_name);
             dob = itemView.findViewById(R.id.birthday);
+            gender = itemView.findViewById(R.id.gender);
             averageScore = itemView.findViewById(R.id.average_score);
         }
     }

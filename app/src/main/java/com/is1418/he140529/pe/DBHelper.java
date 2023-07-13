@@ -15,15 +15,16 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String ID_COLUMN = "id";
     public static final String FULLNAME_COLUMN = "fullname";
     public static final String DOB_COLUMN = "dob";
+    public static final String GENDER_COLUMN = "gender";
     public static final String AVERAGE_SCORE_COLUMN = "averageScore";
 
     public DBHelper(Context context) {
-        super(context, STUDENT_TABLE + "Data.db", null, 1);
+        super(context, STUDENT_TABLE + "PeData.db", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase DB) {
-        DB.execSQL("create table " + STUDENT_TABLE + "(" + ID_COLUMN + " INTEGER primary key, " + FULLNAME_COLUMN + " TEXT, " + DOB_COLUMN + " TEXT, " + AVERAGE_SCORE_COLUMN + " TEXT)");
+        DB.execSQL("create table " + STUDENT_TABLE + "(" + ID_COLUMN + " INTEGER primary key, " + FULLNAME_COLUMN + " TEXT, " + DOB_COLUMN + " TEXT, " + GENDER_COLUMN + " TEXT, " + AVERAGE_SCORE_COLUMN + " TEXT)");
     }
 
     @Override
@@ -38,6 +39,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(ID_COLUMN, studentModel.getId());
         contentValues.put(FULLNAME_COLUMN, studentModel.getFullName());
         contentValues.put(DOB_COLUMN, studentModel.getDob());
+        contentValues.put(GENDER_COLUMN, studentModel.getGender());
         contentValues.put(AVERAGE_SCORE_COLUMN, studentModel.getAverageScore());
         long result = DB.insert(STUDENT_TABLE, null, contentValues);
         DB.close();
@@ -72,7 +74,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(STUDENT_TABLE, new String[]{ID_COLUMN,
-                        FULLNAME_COLUMN, DOB_COLUMN, AVERAGE_SCORE_COLUMN}, ID_COLUMN + "= ?",
+                        FULLNAME_COLUMN, DOB_COLUMN, GENDER_COLUMN , AVERAGE_SCORE_COLUMN}, ID_COLUMN + "= ?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
@@ -81,9 +83,10 @@ public class DBHelper extends SQLiteOpenHelper {
         String string = cursor.getString(1);
         String string1 = cursor.getString(2);
         String string2 = cursor.getString(3);
+        String string3 = cursor.getString(4);
 
         StudentModel studentModel = new StudentModel(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2), Float.parseFloat(cursor.getString(3)));
+                cursor.getString(1), cursor.getString(2), cursor.getString(3), Float.parseFloat(cursor.getString(3)));
         // return student
         return studentModel;
     }
@@ -103,7 +106,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 studentModel.setId(Integer.parseInt(cursor.getString(0)));
                 studentModel.setFullName(cursor.getString(1));
                 studentModel.setDob(cursor.getString(2));
-                studentModel.setAverageScore(Float.parseFloat(cursor.getString(3)));
+                studentModel.setGender(cursor.getString(3));
+                studentModel.setAverageScore(Float.parseFloat(cursor.getString(4)));
                 // Adding student to list
                 studentModelList.add(studentModel);
             } while (cursor.moveToNext());
@@ -121,7 +125,8 @@ public class DBHelper extends SQLiteOpenHelper {
         selectQuery += " AND " + ID_COLUMN + " LIKE '%" + arrSearch.get(0) + "%'";
         selectQuery += " AND " + FULLNAME_COLUMN + " LIKE '%" + arrSearch.get(1) + "%'";
         selectQuery += " AND " + DOB_COLUMN + " LIKE '%" + arrSearch.get(2) + "%'";
-        selectQuery += " AND " + AVERAGE_SCORE_COLUMN + " LIKE '%" + arrSearch.get(3) + "%'";
+        selectQuery += " AND " + GENDER_COLUMN + " LIKE '%" + arrSearch.get(3) + "%'";
+        selectQuery += " AND " + AVERAGE_SCORE_COLUMN + " LIKE '%" + arrSearch.get(4) + "%'";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -133,7 +138,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 studentModel.setId(Integer.parseInt(cursor.getString(0)));
                 studentModel.setFullName(cursor.getString(1));
                 studentModel.setDob(cursor.getString(2));
-                studentModel.setAverageScore(Float.parseFloat(cursor.getString(3)));
+                studentModel.setGender(cursor.getString(3));
+                studentModel.setAverageScore(Float.parseFloat(cursor.getString(4)));
                 // Adding student to list
                 studentModelList.add(studentModel);
             } while (cursor.moveToNext());
@@ -149,6 +155,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(FULLNAME_COLUMN, studentModel.getFullName());
         values.put(DOB_COLUMN, studentModel.getDob());
+        values.put(GENDER_COLUMN, studentModel.getGender());
         values.put(AVERAGE_SCORE_COLUMN, studentModel.getAverageScore());
 
         // updating row

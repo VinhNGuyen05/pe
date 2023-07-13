@@ -7,22 +7,12 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/rollnumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:padding="5dp"
-        android:text="HE140529_Bui Duc Long"
-        android:textColor="@color/red" />
-
-    <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rollnumber"
         android:layout_centerHorizontal="true"
         android:padding="5dp"
-        android:text="Student Management"
+        android:text="Employee Management"
         android:textSize="18dp"
         android:textStyle="bold" />
 
@@ -57,11 +47,18 @@
             android:hint="Birthday" />
 
         <EditText
+            android:id="@+id/edt_gender"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Gender" />
+
+        <EditText
             android:id="@+id/edt_averageScore"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="Average score" />
+            android:hint="Salary (vnd)" />
     </LinearLayout>
 
     <LinearLayout
@@ -72,7 +69,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="5dp">
 
         <Button
             android:id="@+id/btn_add"
@@ -84,23 +81,23 @@
             android:id="@+id/btn_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:text="UPDATE" />
 
         <Button
             android:id="@+id/btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
 
             android:text="DELETE" />
 
-        <Button
-            android:id="@+id/btn_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="LIST" />
+            <Button
+                android:id="@+id/btn_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="LIST" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

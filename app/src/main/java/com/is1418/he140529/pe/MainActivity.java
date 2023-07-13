@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private EditText edt_id, edt_fullName, edt_birthday, edt_averageScore;
+    private EditText edt_id, edt_fullName, edt_birthday, edt_gender , edt_averageScore;
     private Button btn_add, btn_update, btn_delete, btn_list;
     private RecyclerView recyclerView;
 
@@ -43,10 +43,11 @@ public class MainActivity extends AppCompatActivity {
                     int id = Integer.parseInt(edt_id.getText().toString());
                     String fullname = edt_fullName.getText().toString();
                     String dob = edt_birthday.getText().toString();
+                    String gender = edt_gender.getText().toString();
                     String averageScore = edt_averageScore.getText().toString();
 
                     if (!DB.checkExistStudentInDB(id)) {
-                        StudentModel studentModel = new StudentModel(id, fullname, dob, Float.parseFloat(averageScore));
+                        StudentModel studentModel = new StudentModel(id, fullname, dob, gender, Float.parseFloat(averageScore));
                         boolean checkInsertData = DB.insertStudent(studentModel);
                         if (checkInsertData) {
                             Toast.makeText(MainActivity.this, "Add successfully!", Toast.LENGTH_SHORT).show();
@@ -54,17 +55,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(MainActivity.this, "Add failed!", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        StudentModel studentModel = new StudentModel();
-                        studentModel.setId(id);
-                        studentModel.setFullName(fullname);
-                        studentModel.setDob(dob);
-                        studentModel.setAverageScore(Float.parseFloat(averageScore));
-                        int i = DB.updateStudent(studentModel);
-                        if (i >= 1) {
-                            Toast.makeText(MainActivity.this, "Update successfully!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(MainActivity.this, "Update failed!", Toast.LENGTH_SHORT).show();
-                        }
+                        Toast.makeText(MainActivity.this, "Id is already exist!", Toast.LENGTH_SHORT).show();
                     }
 
                     studentModelList = DB.getAllStudents();
@@ -85,12 +76,14 @@ public class MainActivity extends AppCompatActivity {
                 String id = edt_id.getText().toString().trim();
                 String fullname = edt_fullName.getText().toString().trim();
                 String dob = edt_birthday.getText().toString().trim();
+                String gender = edt_gender.getText().toString().trim();
                 String averageScore = edt_averageScore.getText().toString().trim();
 
                 ArrayList<String> arrSearch = new ArrayList<>();
                 arrSearch.add(id);
                 arrSearch.add(fullname);
                 arrSearch.add(dob);
+                arrSearch.add(gender);
                 arrSearch.add(averageScore);
 
                 List<StudentModel> studentModelList = DB.searchStudents(arrSearch);
@@ -128,16 +121,25 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 try {
                     studentModelList.clear();
-                    int id = Integer.parseInt(edt_id.getText().toString().trim());
-                    String fullname = edt_fullName.getText().toString().trim();
-                    String dob = edt_birthday.getText().toString().trim();
-                    String score = edt_averageScore.getText().toString().trim();
-                    StudentModel studentModel = DB.getStudent(id);
-                    studentModel.setFullName(fullname);
-                    studentModel.setDob(dob);
-                    studentModel.setAverageScore(Float.parseFloat(score));
-                    DB.updateStudent(studentModel);
-                    Toast.makeText(MainActivity.this, "Update successfully!", Toast.LENGTH_SHORT).show();
+
+                    int id = Integer.parseInt(edt_id.getText().toString());
+                    String fullname = edt_fullName.getText().toString();
+                    String dob = edt_birthday.getText().toString();
+                    String gender = edt_gender.getText().toString();
+                    String averageScore = edt_averageScore.getText().toString();
+
+                        StudentModel studentModel = new StudentModel();
+                        studentModel.setId(id);
+                        studentModel.setFullName(fullname);
+                        studentModel.setDob(dob);
+                        studentModel.setGender(gender);
+                        studentModel.setAverageScore(Float.parseFloat(averageScore));
+                        int i = DB.updateStudent(studentModel);
+                        if (i >= 1) {
+                            Toast.makeText(MainActivity.this, "Update successfully!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Update failed!", Toast.LENGTH_SHORT).show();
+                        }
 
                     studentModelList = DB.getAllStudents();
                     studentAdapter = new StudentAdapter(MainActivity.this, studentModelList);
@@ -158,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
         edt_id = findViewById(R.id.edt_id);
         edt_fullName = findViewById(R.id.edt_fullName);
         edt_birthday = findViewById(R.id.edt_birthday);
+        edt_gender = findViewById(R.id.edt_gender);
         edt_averageScore = findViewById(R.id.edt_averageScore);
         btn_add = findViewById(R.id.btn_add);
         btn_update = findViewById(R.id.btn_update);
