@@ -101,9 +101,13 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     studentModelList.clear();
                     int id = Integer.parseInt(edt_id.getText().toString().trim());
-                    StudentModel studentModel = DB.getStudent(id);
-                    DB.deleteStudent(studentModel);
-                    Toast.makeText(MainActivity.this, "Delete successfully!", Toast.LENGTH_SHORT).show();
+//                    StudentModel studentModel = DB.getStudent(id);
+                    if (DB.checkExistStudentInDB(id) == true) {
+                        DB.deleteStudent(id);
+                        Toast.makeText(MainActivity.this, "Delete successfully!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Id is not exist!", Toast.LENGTH_SHORT).show();
+                    }
 
                     studentModelList = DB.getAllStudents();
                     studentAdapter = new StudentAdapter(MainActivity.this, studentModelList);

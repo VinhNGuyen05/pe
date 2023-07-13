@@ -49,10 +49,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public void deleteStudent(StudentModel studentModel) {
+    public void deleteStudent(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(STUDENT_TABLE, ID_COLUMN + " = ?",
-                new String[]{String.valueOf(studentModel.getId())});
+                new String[]{String.valueOf(id)});
         db.close();
     }
 
